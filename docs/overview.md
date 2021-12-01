@@ -41,4 +41,6 @@ Once the required number of signatures have been obtained for a given deposit tr
 
 The *owner* Multi-Sig Consensus node then marks the transaction as complete.
 
+**Withdrawals (sXMR --> XMR)**
+
 *More information to follow...*
