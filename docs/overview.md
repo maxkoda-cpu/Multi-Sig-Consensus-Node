@@ -21,5 +21,24 @@ is called the **owner** of the transaction. Every other node participates as a s
 Multi-Sig Consensus Nodes are available through the api via the I2P network. The utilization of the I2P network provides not only anonymous end-to-end encrypted
 network communication, it also decentralizes the api. This will be better explained in the walkthrough provided below.
 
+**Deposits (XMR --> sXMR)**
+
+Secret Monero Bridge deposits are made directly by users with the wallet of their choice. A deposit is made by sending an amount of Monero (XMR) to the Secret Monero Bridge Monero multi-signature wallet (46KTmvCDx862ijymLsCDVaCZ5UNc2A6yNhYEBt4t6AkrLf5CpF7XuB8HjUffdAfcZRTnZD1f3JyeTixqSsdMW7Sd9x1odvN).
+
+Once Monero is sent to the Secret Monero Bridge Monero multi-signature wallet, a deposit can be processed. To start the processing of a deposit, the user must send an email message to secretmonero@i2pmail.org (an I2P email destination). The body of the email message must be an RSA 4096-bit encrypted string describing the details of the deposit which includes the Monero txid and txkey for the deposit transaction which we refer to as the "Monero Proof-of-Payment", along with the Secret Network address to receive the sXMR. The RSA 4096-bit encrypted message is created through our client applications (Web Dapp or Secret Monero Bridge CLI). The details of the deposit are encrypted to keep the information private in case the email is transferred over the clearnet (we advise sending emails through anonymous email accounts over end-to-end encrypted communications such as I2P mail so as to not leave metadata trails).
+
+Once a deposit email is received, the Secret Monero Bridge decrypts the email message and then verifies the Monero Proof-of-Payment. If the Monero Proof-of-Payment is valid, the deposit transaction moves to the next step in processing. If the Monero Proof-of-Payment is not valid, the email message is deleted.
+
+Once the Monero Proof-of-Payment is verified as valid, the Secret Monero Bridge then submits the deposit transaction to the Multi-Sig Consensus Node api. The endpoint for the Multi-Sig Consensus Node api is an I2P destination (a base64 representation of the public I2P key of the destination). Each Multi-Sig Consensus Node has it's own i2p router configured with the Multi-Sig Consensus Node api configured as a hidden service.
+
+Each Multi-Sig Consensus Nodes can accept deposit transactions through the decentralized Multi-Sig Consensus Node api. Once received, the receiving Multi-Sig Consensus Node claims ownership of the deposit transaction. The *owner* role, is provided authorization privileges for the transaction. The other Multi-Sig Consensus Nodes (without ownership) role, simply verify and sign multi-signature transactions for the deposit.
+
+The *owner* Multi-Sig Consensus Node, verifies the Monero Proof-of-Payment, then creates a multi-signature *mint* sXMR transaction, and then signs the transaction that will be executed on the Secret Network, once the required number of signatures (from additional Multi-Sig Consenus Nodes) are received. The *owner* Multi-Sig Consensus Node then records the deposit transaction in its local database, and then replicates that transaction to all the other Multi-Sig Consensus Nodes via the Multi-Sig Consenus Node api.
+
+When a Multi-Sig Consensus Node receives a replicated transaction, it verifies the Monero Proof-of-Payment, signs the transaction, updates its copy of the database, and then replicates its signature to all the other Multi-Sig Consensus Nodes (again via the Multi-Sig Consensus Node api).
+
+Once the required number of signatures have been obtained for a given deposit transaction, the *owner* Multi-Sig Consensus Node then broadcasts the signed transaction on the Secret Network and the sXMR is minted. The receiving Secret Network address (which is included in encrypted email message for the deposit and a required data element for a deposit transaction), obtains the newly minted sXMR.
+
+The *owner* Multi-Sig Consensus node then marks the transaction as complete.
 
 *More information to follow...*
