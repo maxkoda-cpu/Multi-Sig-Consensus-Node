@@ -33,13 +33,15 @@ Once the Monero Proof-of-Payment is verified as valid, and checked to make certa
 
 Each Multi-Sig Consensus Node can accept deposit transactions through the decentralized Multi-Sig Consensus Node api. Once received, the receiving Multi-Sig Consensus Node claims ownership of the deposit transaction. The *owner* role, is provided authorization privileges for the transaction. The other Multi-Sig Consensus Nodes (without ownership) role, simply verify and sign multi-signature transactions for the deposit.
 
-The *owner* Multi-Sig Consensus Node, verifies the Monero Proof-of-Payment, then creates a multi-signature *mint* sXMR transaction, and then signs the transaction that will be executed on the Secret Network, once the required number of signatures (from additional Multi-Sig Consenus Nodes) are received. The *owner* Multi-Sig Consensus Node then records the deposit transaction in its local database, and then replicates that transaction to all the other Multi-Sig Consensus Nodes via the Multi-Sig Consenus Node api.
+The *owner* Multi-Sig Consensus Node, verifies the Monero Proof-of-Payment, then creates a multi-signature *mint* sXMR transaction, and then signs the transaction that will eventually be executed on the Secret Network, once the required number of signatures (from additional Multi-Sig Consenus Nodes) are received. 
 
-When a Multi-Sig Consensus Node receives a replicated transaction, it verifies the Monero Proof-of-Payment, signs the transaction, updates its copy of the database, and then replicates its signature to all the other Multi-Sig Consensus Nodes (again via the Multi-Sig Consensus Node api).
+The *owner* Multi-Sig Consensus Node then records the deposit transaction (with signature) in its local database, and then replicates that transaction to all the other Multi-Sig Consensus Nodes via the Multi-Sig Consenus Node api.
+
+When a Multi-Sig Consensus Node receives a replicated transaction, it verifies the Monero Proof-of-Payment (notice multiple confirmations), signs the transaction, updates its copy of the database, and then replicates its signature to all the other Multi-Sig Consensus Nodes (again via the Multi-Sig Consensus Node api).
 
 Once the required number of signatures have been obtained for a given deposit transaction, the *owner* Multi-Sig Consensus Node then broadcasts the signed transaction on the Secret Network and the sXMR is minted. The receiving Secret Network address (which is included in encrypted email message for the deposit and a required data element for a deposit transaction), obtains the newly minted sXMR.
 
-The *owner* Multi-Sig Consensus node then marks the transaction as complete.
+The *owner* Multi-Sig Consensus node then marks the transaction as complete and replicates the completed status to other Multi-Sig Consensus nodes via the api.
 
 **Withdrawals (sXMR --> XMR)**
 
