@@ -69,5 +69,15 @@ The receiving Monero wallet address (which is included in encrypted email messag
 
 The *owner* Multi-Sig Consensus node then marks the transaction as complete and replicates the completed status to other Multi-Sig Consensus nodes via the api.
 
+**Multi-Sig Consensus Node - Monero Wallet RPC**
+
+Each Multi-Sig Consensus Node has its own monero wallet that is serviced through the *monero-wallet-rpc* running on a separate computer (separate from the computer running the Multi-Sig Consensus Node). Collectively, these individual wallets constitute the multi-signature Monero wallet. Each Multi-Sig Consensus Node communicates with its monero-wallet-rpc over the I2P network.
+
+Each instance of the monero-wallet rpc is provided as an I2P hidden service with an assigned I2P destination. No other Multi-Sig Consensus Node is aware of any other Multi-Sig Consensus Nodes monero-wallet-rpc I2P hidden service destination.
+
+As an added layer of security, the Secret Monero Bridge governance facility has the ability to start/stop each instance of the monero-wallet-rpc hidden service.
+This enables Secret Monero Bridge governance the ability to start/stop withdrawal payments.
+
+This separation of the Monero wallet from the Multi-Sig Consensus Node was designed to scale the decentralization of the Secret Monero Bridge Monero wallet via the governance facility and provide checks and balances.
 
 *More information to follow...*
