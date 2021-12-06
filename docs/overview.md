@@ -59,7 +59,7 @@ When a Multi-Sig Consensus Node receives a replicated transaction, it verifies t
 
 Once the required number of signatures have been obtained for a given withdrawal transaction, the *owner* Multi-Sig Consensus Node then broadcasts the signed transaction on the Secret Network and the sXMR is burned. 
 
-The *owner* Multi-Sig Consensus node then prepares a Monero transfer transaction with the *amount* of sXMR, less the bridge fee. The *owner* Multi-Sig Consensus Node then signs the Monero transaction and requests the other Multi-Signature Consensus Nodes to synchronize their Monero wallet, and sign the transaction via the api. Each Multi-Sig Consensus Node being asked to sign, performs its own verification of the underlying withdraw transaction information before providing its signature. If for any reason a Multi-Sig Consensus Node is unable to verify a withdrawal transaction, it witholds its signature.
+The *owner* Multi-Sig Consensus node then prepares a Monero transfer transaction with the *amount* of sXMR, less the bridge fee. The *owner* Multi-Sig Consensus Node then signs the Monero transaction and requests the other Multi-Signature Consensus Nodes to refresh, synchronize their Monero wallet, and sign the transaction via the api. Each Multi-Sig Consensus Node being asked to sign, performs its own verification of the underlying withdraw transaction information before providing its signature. If for any reason a Multi-Sig Consensus Node is unable to verify a withdrawal transaction, it witholds its signature.
 
 *Each Multi-Sig Consensus Node records all actions taken in its local database and replicates the transaction state to the other Multi-Sig Consensus Nodes via the api.*
 
