@@ -45,4 +45,29 @@ The *owner* Multi-Sig Consensus node then marks the transaction as complete and 
 
 **Withdrawals (sXMR --> XMR)**
 
+Secret Monero Bridge withdrawals are initiated directly by users, transfering a specified amount of sXMR to a Secret Monero Bridge multi-signature Secret Network account address. A withdrawal is processed once a withdrawal email message is sent by the user to the Secret Monero Bridge email address. Similar to deposits, withdrawal email messages include an RSA 4096-bit encrypted string containing the details of the withdrawal.
+
+Once received by the Secret Monero Bridge backend, the email message is decrypted, and the withdrawal transfer information is verified. If the withdrawal transfer can't be verified, the email is deleted and processing is terminated. If the withdrawal transfer is verified, the withdrawal information is submitted to the Multi-Sig Consensus Node api.
+
+Each Multi-Sig Consensus Node can accept withdrawal transactions through the decentralized Multi-Sig Consensus Node api. Once received, the receiving Multi-Sig Consensus Node claims ownership of the withdrawal transaction. The *owner* role, is provided authorization privileges for the transaction. The other Multi-Sig Consensus Nodes (without ownership) role, simply verify and sign multi-signature transactions for the withdrawal.
+
+The *owner* Multi-Sig Consensus Node, verifies the withdrawal transfer of sXMR to the Secret Monero Bridge multi-signature Secret Network account, then creates a multi-signature *burn* sXMR transaction, and then signs the transaction that will eventually be executed on the Secret Network, once the required number of signatures (from additional Multi-Sig Consenus Nodes) are received. 
+
+The *owner* Multi-Sig Consensus Node then records the withdrawal transaction (with signature) in its local database, and then replicates that transaction to all the other Multi-Sig Consensus Nodes via the Multi-Sig Consenus Node api.
+
+When a Multi-Sig Consensus Node receives a replicated transaction, it verifies the the withdrawal transfer (notice multiple confirmations), signs the transaction, updates its copy of the database, and then replicates its signature to all the other Multi-Sig Consensus Nodes (again via the Multi-Sig Consensus Node api).
+
+Once the required number of signatures have been obtained for a given withdrawal transaction, the *owner* Multi-Sig Consensus Node then broadcasts the signed transaction on the Secret Network and the sXMR is burned. 
+
+The *owner* Multi-Sig Consensus node then prepares a Monero transfer transaction with the *amount* of sXMR, less the bridge fee. The *owner* Multi-Sig Consensus Node then signs the Monero transaction and requests the other Multi-Signature Consensus Nodes to synchronize their Monero wallet, and sign the transaction via the api. Each Multi-Sig Consensus Node being asked to sign, performs its own verification of the underlying withdraw transaction information before providing its signature. If for any reason a Multi-Sig Consensus Node is unable to verify a withdrawal transaction, it witholds its signature.
+
+*Each Multi-Sig Consensus Node records all actions taken in its local database and replicates the transaction state to the other Multi-Sig Consensus Nodes via the api.*
+
+Once the required number of signatures have been obtained, the *owner* Multi-Sig Consensus Node broadcasts the signed Monero transaction on the Monero network. 
+
+The receiving Monero wallet address (which is included in encrypted email message for the withdrawal and a required data element for a withdraw transaction), receives the XMR. *The Monero Proof-of-Payment of the transfer is retained as evidence that the withdrawal payment was made.*
+
+The *owner* Multi-Sig Consensus node then marks the transaction as complete and replicates the completed status to other Multi-Sig Consensus nodes via the api.
+
+
 *More information to follow...*
